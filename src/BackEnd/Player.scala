@@ -1,4 +1,5 @@
-package Back-End.player
+package BackEnd
+
 
 class Player(var playerSpeed: Double) {
 

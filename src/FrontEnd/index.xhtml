@@ -9,18 +9,26 @@
 <body background="mainmenu.png">
 <center>
 
-    <h1> Arena Project</h1>
-    <button type = "button" onclick = "drawTriangle()">START GAME</button>
+    <h1>Arena Project </h1>
+    <button type = "button" onclick = "startGame()">START GAME</button>
 </center>
 
+<button type = "button" onclick = "moveup()">UP</button>
+<button type = "button" onclick = "movedown()">DOWN</button>
+<button type = "button" onclick = "moveleft()">LEFT</button>
+<button type = "button" onclick = "moveright()">RIGHT</button>
 <script type="javascript">
 
-    function character() {
-        var canvas = document.querySelector("#myCanvas");
+    function startGame() {
+        myGamePiece = new component(30, 30, "image1", 10, 120, "image");
+        myGameArea.start();
+    }
+
+    var canvas = document.querySelector("#myCanvas");
         var context = canvas.getContext("2d");
 
-        function drawTriangle() {
-            // the triangle
+        function player() {
+            // the player
             context.beginPath();
             context.moveTo(200, 100);
             context.lineTo(170, 150);
@@ -36,25 +44,25 @@
             context.fillStyle = "rgba(255, 204, 0, 1)";
             context.fill();
         }
-        drawTriangle();
 
-        // the triangle
-        context.beginPath();
-        context.moveTo(200, 100);
-        context.lineTo(170, 150);
-        context.lineTo(230, 150);
-        context.closePath();
-
-        // the outline
-        context.lineWidth = 10;
-        context.strokeStyle = "rgba(102, 102, 102, 1)";
-        context.stroke();
-
-        // the fill color
-        context.fillStyle = "rgba(255, 204, 0, 1)";
-        context.fill();
+    function moveup() {
+        myGamePiece.speedY = -1;
     }
+
+    function movedown() {
+        myGamePiece.speedY = 1;
+    }
+
+    function moveleft() {
+        myGamePiece.speedX = -1;
+    }
+
+    function moveright() {
+        myGamePiece.speedX = 1;
+    }
+
 </script>
+
 </body>
 
 </html>
