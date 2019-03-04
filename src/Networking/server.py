@@ -20,13 +20,13 @@ def getOne(name):
     return {'player' : the_player[0]}
 
 
-@post('/join')
+@post('/player/<name>')
 def addOne(name):
     add_player = {'name' : request.json.get('name'), 'type' : request.json.get('type')}
     gameplayers.append(add_player)
     return {'players' : gameplayers}
 
-@post('/leave')
+@post('/player/<name>')
 def remove_player(name):
     the_player = [player for player in players if player['name'] == name]
     gameplayers.remove(the_player[0])
