@@ -1,5 +1,4 @@
-
-from bottle import get, run, post, request
+import bottle
 
 players = [{"name": "Winson", "playerid": "1"},
            {"name": "Kyle", "playerid": "2"},
@@ -9,7 +8,7 @@ newplayer = {"name": "HEHE", "playerid": "4"}
 gameplayers = []
 
 
-@get("/player")
+@bottle.get("/player")
 def getAll():
     return {"players": gameplayers}
 
@@ -20,13 +19,14 @@ def getOne(name):
     return {'player' : the_player[0]}
 
 
-@post('/player/<name>')
+@bottle.post('/join')
 def addOne(name):
-    add_player = {'name' : request.json.get('name'), 'type' : request.json.get('type')}
-    gameplayers.append(add_player)
+    add_player = bottle.request.body.read().decode()
+    add_player = json.loads(add_player)
+    gameplayers.append(add_player['name'])
     return {'players' : gameplayers}
 
-@post('/player/<name>')
+@bottle.post('/leave')
 def remove_player(name):
     the_player = [player for player in players if player['name'] == name]
     gameplayers.remove(the_player[0])
