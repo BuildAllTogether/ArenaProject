@@ -13,7 +13,7 @@ object GUI2D extends JFXApp {
   val windowWidth: Double = 800
   val windowHeight: Double = 600
 
-  val playerCircleRadius:Double = 20
+  val playerCircleRadius: Double = 20
   val playerSpeed: Double = 10
 
   val rectangleWidth: Double = 60
@@ -78,5 +78,4 @@ object GUI2D extends JFXApp {
     // Start Animations. Calls update 60 times per second (takes update as an argument)
     AnimationTimer(update).start()
   }
-
 }
