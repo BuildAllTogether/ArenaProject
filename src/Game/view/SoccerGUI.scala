@@ -5,12 +5,19 @@ import javafx.scene.input.KeyEvent.ANY
 import Game.model.Game
 import _root_.Game.model.game_objects.{Boundary, Platform}
 import _root_.Game.model.environment.PhysicsVector
+import javafx.event.ActionEvent
 import scalafx.animation.AnimationTimer
 import scalafx.application.JFXApp
 import scalafx.application.JFXApp.PrimaryStage
-import scalafx.scene.paint.Color
+import scalafx.scene.control.{Button, TextField}
+import scalafx.scene.image.{Image, ImageView}
+import scalafx.scene.layout.HBox
+import scalafx.scene.paint.{Color, LinearGradient, Stops}
+import scalafx.scene.paint.Color.{ForestGreen, White, Yellow}
 import scalafx.scene.shape.{Rectangle, Shape}
+import scalafx.scene.text.Text
 import scalafx.scene.{Group, Scene}
+import scalafx.stage.Stage
 
 object SoccerGUI extends JFXApp {
 
@@ -83,10 +90,62 @@ object SoccerGUI extends JFXApp {
     }
   }
 
+  var GameWindow = new Stage
 
-  this.stage = new PrimaryStage {
+
+  GameWindow = new PrimaryStage {
     this.title = "Soccer"
-    scene = new Scene(windowWidth, windowHeight) {
+
+    scene = new Scene(1000,800) {
+
+
+      fill = ForestGreen
+
+      val img = new Image("http://www.how-to-draw-cartoons-online.com/image-files/xcartoon_soccer.gif.pagespeed.ic.gm0gFBQIPL.png")
+
+      val menu = new ImageView(img)
+
+      menu.layoutX = 370
+      menu.layoutY = 250
+
+
+      val word = new HBox {
+        children = Seq(
+          new Text("Soccer  Shooters") {
+
+            style = "-fx-font-size: 100pt"
+            fill = new LinearGradient(
+              endX = 0,
+              stops = Stops(White, Yellow))
+          })
+      }
+
+
+      val button = new Button("Start Game")
+      button.layoutX = 455
+      button.layoutY = 600
+
+
+      val textField = new TextField
+      textField.layoutX = 418
+      textField.layoutY = 550
+      textField.promptText = "Username"
+
+
+
+      button.onAction = (event: ActionEvent) => {
+        println("Button clicked.")
+        println(textField.getText)
+        GameWindow.setScene(scene1)
+      }
+
+
+      content = List(button, textField, word, menu)
+
+    }
+
+
+    var scene1 = new Scene(windowWidth, windowHeight) {
       content = List(sceneGraphics)
 
       addEventHandler(ANY, new WASDInputs(game.playerA1))
