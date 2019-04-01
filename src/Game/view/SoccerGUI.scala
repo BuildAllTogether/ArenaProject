@@ -135,7 +135,7 @@ object SoccerGUI extends JFXApp {
 
 
       button.onAction = (event: ActionEvent) => {
-        println("Button clicked.")
+        println("Button clicked")
         println(textField.getText)
         the_gamewindow.setScene(scene1)
       }
