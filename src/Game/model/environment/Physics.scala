@@ -11,13 +11,19 @@ object Physics {
   def computePotentialLocation(obj: PhysicalObject, dt: Double): PhysicsVector = {
     val newX = obj.location.x + dt * obj.velocity.x
     val newY = obj.location.y + dt * obj.velocity.y
-    val newZ = obj.location.z + dt * obj.velocity.z
+    var newZ = obj.location.z + dt * obj.velocity.z
+    if (newZ < 0.0){
+      newZ = 0.0
+    }
     new PhysicsVector(newX, newY, newZ)
   }
 
   def updateVelocity(obj: PhysicalObject, world: World, dt: Double): Unit = {
     // Always apply gravity. Objects will adjust their velocity if they are on the ground
     obj.velocity.z = obj.velocity.z - world.gravity * dt
+    if (obj.location.z == 0 && obj.velocity.z < 0){
+      obj.velocity.z = 0
+    }
   }
 
   def detectCollision(thing: PhysicalObject, potLocation: PhysicsVector, edgy: Boundary): Boolean ={
