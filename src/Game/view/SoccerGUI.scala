@@ -3,7 +3,7 @@ package Game.view
 import Game.controller.{ArrowInputs, IJKLInputs, TFGHInputs, WASDInputs}
 import javafx.scene.input.KeyEvent
 import Game.model.Game
-import _root_.Game.model.game_objects.{Boundary, Platform}
+import _root_.Game.model.game_objects.Boundary
 import _root_.Game.model.environment.PhysicsVector
 import javafx.event.ActionEvent
 import scalafx.animation.AnimationTimer
@@ -109,7 +109,7 @@ object SoccerGUI extends JFXApp {
       menu.layoutY = 250
 
 
-      val word = new HBox {
+      val word: HBox = new HBox {
         children = Seq(
           new Text("Soccer  Shooters") {
 
@@ -145,7 +145,7 @@ object SoccerGUI extends JFXApp {
     }
 
 
-    var scene1 = new Scene(windowWidth, windowHeight) {
+    var scene1: Scene = new Scene(windowWidth, windowHeight) {
 
       fill = ForestGreen
 
