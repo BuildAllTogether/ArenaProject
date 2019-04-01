@@ -16,9 +16,9 @@ class Game {
 
   var platforms: List[Boundary] = List(
     new Boundary(new PhysicsVector(0, 0, 0), new PhysicsVector(gridWidth, 0, 0)),
-//    new Platform(new PhysicsVector(gridWidth * 1.0 / 11.0, 0, 0), new PhysicsVector(gridWidth * 1.0 / 11.0, 10, 10)),
-//    new Platform(new PhysicsVector(gridWidth * 10.0 / 11.0, 0, 0), new PhysicsVector(gridWidth * 10.0 / 11.0, 10, 10)),
-//    new Platform(new PhysicsVector(gridWidth * 10.0 / 11.0, 10, 10), new PhysicsVector(5, 5, 5))
+    new Boundary(new PhysicsVector(gridWidth * 1.0 / 11.0 - 1, 0, 0), new PhysicsVector(gridWidth * 1.0 / 11.0, 0, 0)),
+    new Boundary(new PhysicsVector(gridWidth * 10.0 / 11.0 - 1, 0, 0), new PhysicsVector(gridWidth * 10.0 / 11.0, 0, 0))
+//    new Boundary(new PhysicsVector(gridWidth * 10.0 / 11.0, 10, 10), new PhysicsVector(5, 5, 5))
     )
 
   val minPlatformWidth = 1.0

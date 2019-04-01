@@ -26,6 +26,7 @@ class Player(playerLocation: PhysicsVector, playerVelocity: PhysicsVector, var p
   // Begin API methods
   //Pressing A
   def aPressed(): Unit = {
+    println("A")
     this.aHeld = true
     this.state.aPressed()
   }
@@ -71,11 +72,11 @@ class Player(playerLocation: PhysicsVector, playerVelocity: PhysicsVector, var p
   // where they are called
 
   def walkA(): Unit = {
-    this.velocity.x = -this.walkSpeed
+    this.velocity.x -= this.walkSpeed
   }
 
   def walkD(): Unit = {
-    this.velocity.x = this.walkSpeed
+    this.velocity.x += this.walkSpeed
   }
 
 

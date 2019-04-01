@@ -8,9 +8,11 @@ abstract class PlayerState(player: Player) {
     timeInState += dt
 
     if(player.aHeld){
+      println("Left Held")
       this.aPressed()
     }
     if(player.dHeld){
+      println("Right Held")
       this.dPressed()
     }
   }
@@ -19,21 +21,31 @@ abstract class PlayerState(player: Player) {
 
   // API methods. Most methods do nothing by default. Only override methods that are needed for each state
   //Movement Behavior
-  def aPressed(): Unit = {}
+  def aPressed(): Unit = {
+    println("Left Pressed")
+  }
 
-  def dPressed(): Unit = {}
+  def dPressed(): Unit = {
+    println("Right Pressed")
+  }
 
-  def wPressed(): Unit = {}
+  def wPressed(): Unit = {
+    println("Jump Pressed")
+  }
 
   def aReleased(): Unit = {
+    println("Left Released")
     player.stop()
   }
 
   def dReleased(): Unit = {
+    println("Right Released")
     player.stop()
   }
 
-  def wReleased(): Unit = {}
+  def wReleased(): Unit = {
+    println("Jump Released")
+  }
 
   //Action Behavior
   def shoot(): Unit = {}
