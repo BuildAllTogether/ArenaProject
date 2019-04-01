@@ -13,7 +13,7 @@ import scalafx.scene.paint.Color
 import scalafx.scene.shape.{Rectangle, Shape}
 import scalafx.scene.{Group, Scene}
 
-object PlatformerGUI extends JFXApp {
+object SoccerGUI extends JFXApp {
 
   var lastUpdateTime: Long = System.nanoTime()
 
