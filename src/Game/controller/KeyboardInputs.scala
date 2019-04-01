@@ -2,7 +2,7 @@ package Game.controller
 
 import Game.model.Player.Player
 import javafx.event.EventHandler
-import scalafx.scene.input.KeyEvent
+import javafx.scene.input.KeyEvent
 
 abstract class KeyboardInputs(player: Player) extends EventHandler[KeyEvent] {
 
@@ -41,4 +41,16 @@ class ArrowInputs(player: Player) extends KeyboardInputs(player) {
   override val LEFT: String = "Left"
   override val RIGHT: String = "Right"
   override val JUMP: String = "Up"
+}
+
+class IJKLInputs(player: Player) extends KeyboardInputs(player) {
+  override val LEFT: String = "J"
+  override val RIGHT: String = "L"
+  override val JUMP: String = "I"
+}
+
+class TFGHInputs(player: Player) extends KeyboardInputs(player) {
+  override val LEFT: String = "F"
+  override val RIGHT: String = "H"
+  override val JUMP: String = "T"
 }

@@ -8,15 +8,19 @@ class Game {
 
   val world = new World(10)
 
-  val gridWidth: Double = 15
-  val gridHeight: Double = 20
-  val playerSize: Double = 0.5
+  val gridWidth: Double = 20
+  val gridHeight: Double = 15
+  val playerSize: Double = 0.65
 
   var killLine: Double = -0.1
 
   var platforms: List[Platform] = List(
-    new Platform(new PhysicsVector(0, 0, 0), new PhysicsVector(gridWidth, 0, 0))
-  )
+    new Platform(new PhysicsVector(0, 0, 0), new PhysicsVector(gridWidth, 0, 0)),
+//    new Platform(new PhysicsVector(gridWidth * 1.0 / 11.0, 0, 0), new PhysicsVector(gridWidth * 1.0 / 11.0, 10, 10)),
+//    new Platform(new PhysicsVector(gridWidth * 10.0 / 11.0, 0, 0), new PhysicsVector(gridWidth * 10.0 / 11.0, 10, 10)),
+//    new Platform(new PhysicsVector(gridWidth * 10.0 / 11.0, 10, 10), new PhysicsVector(5, 5, 5))
+    new Platform(new PhysicsVector(0, 0, 0), new PhysicsVector(0, 0, gridHeight-1))
+    )
 
   val minPlatformWidth = 1.0
   val maxPlatformWidth = 6.0
@@ -28,53 +32,63 @@ class Game {
 
   //Just create 4 lines
   def createGoals(): Unit = {
-    world.goalBars = world.goalBars :+ new Boundary(new PhysicsVector(0, 0, 0), new PhysicsVector(0, 0, 0))
+    world.goalBars = world.goalBars :+ new Boundary(new PhysicsVector(0, 0, 0), new PhysicsVector(1, 1, 1))
+    world.goalBars = world.goalBars :+ new Boundary(new PhysicsVector(2, 2, 2), new PhysicsVector(3, 3, 3))
+    world.goalNet = world.goalNet :+ new Boundary(new PhysicsVector(gridWidth * 1.0 / 11.0, 10, 10), new PhysicsVector(5, 5, 5))
+    world.goalNet = world.goalNet :+ new Boundary(new PhysicsVector(gridWidth * 10.0 / 11.0, 10, 10), new PhysicsVector(7, 7, 7))
   }
 
   createGoals()
 
-  val player1 = new Player(
-    new PhysicsVector(gridWidth / 3.0, 0, 0),
+  val playerA1 = new Player(
+    new PhysicsVector(gridWidth * 2.0 / 11.0, 0, 0),
     new PhysicsVector(0, 0, 0),
     new PhysicsVector(0, 0, 0)
   )
 
-  val player2 = new Player(
-    new PhysicsVector(gridWidth * 2.0 / 3.0, 0, 0),
+  val playerA2 = new Player(
+    new PhysicsVector(gridWidth * 4.0 / 11.0, 0, 0),
     new PhysicsVector(0, 0, 0),
     new PhysicsVector(0, 0, 0)
   )
 
-  world.objects = List(player1, player2)
+  val playerB1 = new Player(
+    new PhysicsVector(gridWidth * 7.0 / 11.0, 0, 0),
+    new PhysicsVector(0, 0, 0),
+    new PhysicsVector(0, 0, 0)
+  )
 
-  def updateWorldAsPlayerRises(player: Player): Unit = {
-    if (player.location.z > (killLine + gridHeight / 2.0)) {
-      killLine = player.location.z - gridHeight / 2.0
-    }
-    if (player.location.z > lastLevelGenerated - gridHeight) {
-      createGoals(lastLevelGenerated + gridHeight.toInt)
-    }
-  }
+  val playerB2 = new Player(
+    new PhysicsVector(gridWidth * 9.0 / 11.0, 0, 0),
+    new PhysicsVector(0, 0, 0),
+    new PhysicsVector(0, 0, 0)
+  )
 
-  def checkGoal(ball: Ball, name: String): Unit = {
-    if (Physics.detectCollision(ball, newBallocation, platforms)) {
-      player.state = new GameOver(player1)
+  val ball = new Ball(
+    new PhysicsVector(gridWidth / 2.0, 0, 0),
+    new PhysicsVector(0, 0, 0),
+    5
+  )
+
+  world.objects = List(playerA1, playerA2, playerB1, playerB2)
+
+
+
+  def checkGoal(ball: Ball): Unit = {
+    if (Physics.detectCollision(ball, Physics.computePotentialLocation(ball, 0.016), world.goalNet.head) ||
+      Physics.detectCollision(ball, Physics.computePotentialLocation(ball, 0.016), world.goalNet(1))) {
 
       // Could add game states and transition to an EndGame state
-      println(name + " fell")
+      //println("New Game")
     }
   }
 
   def update(deltaTime: Double): Unit = {
     Physics.updateWorld(this.world, deltaTime)
-    player1.update(deltaTime)
-    player2.update(deltaTime)
+    playerA1.update(deltaTime)
+    playerA2.update(deltaTime)
 
-    updateWorldAsPlayerRises(player1)
-    updateWorldAsPlayerRises(player2)
-
-    checkGoal(player1, "Player 1")
-    checkGoal(player2, "Player 2")
+    checkGoal(ball)
   }
 
 }
