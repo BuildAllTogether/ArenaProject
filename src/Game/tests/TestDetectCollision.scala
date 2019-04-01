@@ -1,7 +1,7 @@
 package Game.tests
 
 import Game.model.environment._
-import Game.model.game_objects.PhysicalObject
+import Game.model.game_objects.{Boundary, PhysicalObject}
 import org.scalatest._
 
 class TestDetectCollision extends FunSuite{

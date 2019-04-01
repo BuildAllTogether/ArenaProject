@@ -1,10 +1,9 @@
 package Game.view
 
 import Game.controller.{ArrowInputs, IJKLInputs, TFGHInputs, WASDInputs}
-import javafx.scene.input.KeyEvent
 import javafx.scene.input.KeyEvent.ANY
 import Game.model.Game
-import _root_.Game.model.game_objects.Platform
+import _root_.Game.model.game_objects.{Boundary, Platform}
 import _root_.Game.model.environment.PhysicsVector
 import scalafx.animation.AnimationTimer
 import scalafx.application.JFXApp
@@ -72,14 +71,14 @@ object SoccerGUI extends JFXApp {
   }
 
   // assumes no angled platforms
-  def platformSprite(platform: Platform): Rectangle = {
-    val distance: Double = computeDistance(platform.start, platform.end)
+  def platformSprite(boundary: Boundary): Rectangle = {
+    val distance: Double = computeDistance(boundary.start, boundary.end)
 
     new Rectangle() {
       width = distance * scaleFactor
       height = platformThickness * scaleFactor
-      translateX = convertX((platform.start.x + platform.end.x) / 2.0, distance)
-      translateY = convertY(platform.start.z, platformThickness)
+      translateX = convertX((boundary.start.x + boundary.end.x) / 2.0, distance)
+      translateY = convertY(boundary.start.z, platformThickness)
       fill = Color.Black
     }
   }
@@ -90,7 +89,7 @@ object SoccerGUI extends JFXApp {
     scene = new Scene(windowWidth, windowHeight) {
       content = List(sceneGraphics)
 
-      addEventHandler(ANY, new WASDInputs(player = game.playerA1))
+      addEventHandler(ANY, new WASDInputs(game.playerA1))
       addEventHandler(ANY, new ArrowInputs(player = game.playerA2))
       addEventHandler(ANY, new IJKLInputs(player = game.playerB1))
       addEventHandler(ANY, new TFGHInputs(player = game.playerB2))
@@ -107,24 +106,24 @@ object SoccerGUI extends JFXApp {
       playerA2Sprite.translateX.value = convertX(game.playerA2.location.x, playerSpriteSize)
       playerA2Sprite.translateY.value = convertY(game.playerA2.location.z, playerSpriteSize)
 
-      playerA1Sprite.translateX.value = convertX(game.playerB1.location.x, playerSpriteSize)
-      playerA1Sprite.translateY.value = convertY(game.playerB1.location.z, playerSpriteSize)
+      playerB1Sprite.translateX.value = convertX(game.playerB1.location.x, playerSpriteSize)
+      playerB1Sprite.translateY.value = convertY(game.playerB1.location.z, playerSpriteSize)
 
-      playerA2Sprite.translateX.value = convertX(game.playerB2.location.x, playerSpriteSize)
-      playerA2Sprite.translateY.value = convertY(game.playerB2.location.z, playerSpriteSize)
+      playerB2Sprite.translateX.value = convertX(game.playerB2.location.x, playerSpriteSize)
+      playerB2Sprite.translateY.value = convertY(game.playerB2.location.z, playerSpriteSize)
 
       // platforms
-      game.platforms.foreach((platform: Platform) => {
-        if (platformSprites.contains(platform.platformID)) {
+      game.platforms.foreach((boundary: Boundary) => {
+        if (platformSprites.contains(boundary.platformID)) {
 
-          val distance: Double = computeDistance(platform.start, platform.end)
-          platformSprites(platform.platformID).translateX.value = convertX((platform.start.x + platform.end.x) / 2.0, distance)
-          platformSprites(platform.platformID).translateY.value = convertY(platform.start.z, platformThickness)
+          val distance: Double = computeDistance(boundary.start, boundary.end)
+          platformSprites(boundary.platformID).translateX.value = convertX((boundary.start.x + boundary.end.x) / 2.0, distance)
+          platformSprites(boundary.platformID).translateY.value = convertY(boundary.start.z, platformThickness)
 
         } else {
-          val sprite: Rectangle = platformSprite(platform)
+          val sprite: Rectangle = platformSprite(boundary)
           sceneGraphics.children.add(sprite)
-          platformSprites += (platform.platformID -> sprite)
+          platformSprites += (boundary.platformID -> sprite)
         }
       })
     }

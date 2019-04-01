@@ -14,12 +14,11 @@ class Game {
 
   var killLine: Double = -0.1
 
-  var platforms: List[Platform] = List(
-    new Platform(new PhysicsVector(0, 0, 0), new PhysicsVector(gridWidth, 0, 0)),
+  var platforms: List[Boundary] = List(
+    new Boundary(new PhysicsVector(0, 0, 0), new PhysicsVector(gridWidth, 0, 0)),
 //    new Platform(new PhysicsVector(gridWidth * 1.0 / 11.0, 0, 0), new PhysicsVector(gridWidth * 1.0 / 11.0, 10, 10)),
 //    new Platform(new PhysicsVector(gridWidth * 10.0 / 11.0, 0, 0), new PhysicsVector(gridWidth * 10.0 / 11.0, 10, 10)),
 //    new Platform(new PhysicsVector(gridWidth * 10.0 / 11.0, 10, 10), new PhysicsVector(5, 5, 5))
-    new Platform(new PhysicsVector(0, 0, 0), new PhysicsVector(0, 0, gridHeight-1))
     )
 
   val minPlatformWidth = 1.0

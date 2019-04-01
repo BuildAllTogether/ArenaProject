@@ -1,8 +1,8 @@
 package Game.model.Player
 
+import Game.model.game_objects.{InanimateObject, PhysicalObject}
 import Game.model.Player.player_states.ground_states.Standing
 import Game.model.environment.PhysicsVector
-import Game.model.game_objects.{InanimateObject, PhysicalObject}
 
 class Player(playerLocation: PhysicsVector, playerVelocity: PhysicsVector, var playerOrientation: PhysicsVector)
   extends PhysicalObject(playerLocation, playerVelocity) {
