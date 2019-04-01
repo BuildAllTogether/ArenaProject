@@ -1,10 +1,11 @@
 package Game.view
 
-import Game.controller.{ArrowInputs, WASDInputs}
+import Game.controller.{ArrowInputs, IJKLInputs, TFGHInputs, WASDInputs}
 import javafx.scene.input.KeyEvent
+import javafx.scene.input.KeyEvent.ANY
 import Game.model.Game
-import Game.model.game_objects.Platform
-import Game.model.environment._
+import _root_.Game.model.game_objects.Platform
+import _root_.Game.model.environment.PhysicsVector
 import scalafx.animation.AnimationTimer
 import scalafx.application.JFXApp
 import scalafx.application.JFXApp.PrimaryStage
@@ -14,11 +15,11 @@ import scalafx.scene.{Group, Scene}
 
 object PlatformerGUI extends JFXApp {
 
-  var lastUpdateTime: Long = System.nanotime()
+  var lastUpdateTime: Long = System.nanoTime()
 
   val game = new Game()
 
-  val scaleFactor: Double = 30.0
+  val scaleFactor: Double = 30
 
   val windowWidth: Double = game.gridWidth * scaleFactor
   val windowHeight: Double = game.gridHeight * scaleFactor
@@ -31,11 +32,16 @@ object PlatformerGUI extends JFXApp {
   var sceneGraphics: Group = new Group {}
 
 
-  val player1Sprite: Shape = playerSprite(game.player1.location.x, game.player1.location.z, Color.Blue)
-  val player2Sprite: Shape = playerSprite(game.player2.location.x, game.player2.location.z, Color.Red)
+  val playerA1Sprite: Shape = playerSprite(game.playerA1.location.x, game.playerA1.location.z, Color.Blue)
+  val playerA2Sprite: Shape = playerSprite(game.playerA2.location.x, game.playerA2.location.z, Color.Blue)
+  val playerB1Sprite: Shape = playerSprite(game.playerB1.location.x, game.playerA1.location.z, Color.Red)
+  val playerB2Sprite: Shape = playerSprite(game.playerB2.location.x, game.playerA2.location.z, Color.Red)
 
-  sceneGraphics.children.add(player1Sprite)
-  sceneGraphics.children.add(player2Sprite)
+  sceneGraphics.children.add(playerA1Sprite)
+  sceneGraphics.children.add(playerA2Sprite)
+  sceneGraphics.children.add(playerB1Sprite)
+  sceneGraphics.children.add(playerB2Sprite)
+
 
   // Convert game coordinated to GUI coordinates
   // We would use adapter if the GUI was using an interface for coordinates. Since the GUI wants us to set x and y
@@ -80,12 +86,14 @@ object PlatformerGUI extends JFXApp {
 
 
   this.stage = new PrimaryStage {
-    this.title = "Climber"
+    this.title = "Soccer"
     scene = new Scene(windowWidth, windowHeight) {
       content = List(sceneGraphics)
 
-      addEventHandler(KeyEvent.ANY, new WASDInputs(game.player1))
-      addEventHandler(KeyEvent.ANY, new ArrowInputs(game.player2))
+      addEventHandler(ANY, new WASDInputs(player = game.playerA1))
+      addEventHandler(ANY, new ArrowInputs(player = game.playerA2))
+      addEventHandler(ANY, new IJKLInputs(player = game.playerB1))
+      addEventHandler(ANY, new TFGHInputs(player = game.playerB2))
     }
 
     val update: Long => Unit = (time: Long) => {
@@ -93,11 +101,17 @@ object PlatformerGUI extends JFXApp {
       lastUpdateTime = time
       game.update(dt)
 
-      player1Sprite.translateX.value = convertX(game.player1.location.x, playerSpriteSize)
-      player1Sprite.translateY.value = convertY(game.player1.location.z, playerSpriteSize)
+      playerA1Sprite.translateX.value = convertX(game.playerA1.location.x, playerSpriteSize)
+      playerA1Sprite.translateY.value = convertY(game.playerA1.location.z, playerSpriteSize)
 
-      player2Sprite.translateX.value = convertX(game.player2.location.x, playerSpriteSize)
-      player2Sprite.translateY.value = convertY(game.player2.location.z, playerSpriteSize)
+      playerA2Sprite.translateX.value = convertX(game.playerA2.location.x, playerSpriteSize)
+      playerA2Sprite.translateY.value = convertY(game.playerA2.location.z, playerSpriteSize)
+
+      playerA1Sprite.translateX.value = convertX(game.playerB1.location.x, playerSpriteSize)
+      playerA1Sprite.translateY.value = convertY(game.playerB1.location.z, playerSpriteSize)
+
+      playerA2Sprite.translateX.value = convertX(game.playerB2.location.x, playerSpriteSize)
+      playerA2Sprite.translateY.value = convertY(game.playerB2.location.z, playerSpriteSize)
 
       // platforms
       game.platforms.foreach((platform: Platform) => {
