@@ -2,6 +2,7 @@ package Game.model.environment
 
 import Game.model.Game
 import _root_.Game.model.game_objects.{Ball, PhysicalObject}
+import java.awt.geom.Line2D
 
 
 object Physics {
