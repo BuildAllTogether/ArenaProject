@@ -1,5 +1,5 @@
 import bottle
-
+import json
 players = [{"name": "Winson", "playerid": "1"},
            {"name": "Kyle", "playerid": "2"},
            {"name": "Ben", "playerid": "3"}]
@@ -8,12 +8,16 @@ newplayer = {"name": "HEHE", "playerid": "4"}
 gameplayers = []
 
 
+@bottle.route('/Game.db')
+def Game_list:
+
+
 @bottle.get("/player")
 def getAll():
     return {"players": gameplayers}
 
 
-@get('/player/<name>')
+@bottle.get('/player/<name>')
 def getOne(name):
     the_player = [player for player in players if player['name'] == name]
     return {'player' : the_player[0]}
@@ -23,7 +27,7 @@ def getOne(name):
 def addOne(name):
     add_player = bottle.request.body.read().decode()
     add_player = json.loads(add_player)
-    gameplayers.append(add_player['name'])
+    gameplayers.append(add_player[name])
     return {'players' : gameplayers}
 
 @bottle.post('/leave')
@@ -33,4 +37,4 @@ def remove_player(name):
     return {'players' : gameplayers}
 
 
-run(host="0.0.0.0", port=8080, debug=True)
+bottle.run(host="0.0.0.0", port=8080, debug=True)
