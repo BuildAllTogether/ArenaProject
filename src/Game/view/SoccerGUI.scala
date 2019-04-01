@@ -105,7 +105,7 @@ object SoccerGUI extends JFXApp {
 
       val menu = new ImageView(img)
 
-      menu.layoutX = 370
+      menu.layoutX = 420
       menu.layoutY = 250
 
 
@@ -122,12 +122,12 @@ object SoccerGUI extends JFXApp {
 
 
       val button = new Button("Start Game")
-      button.layoutX = 455
+      button.layoutX = 440
       button.layoutY = 600
 
 
       val textField = new TextField
-      textField.layoutX = 418
+      textField.layoutX = 400
       textField.layoutY = 550
       textField.promptText = "Username"
 
