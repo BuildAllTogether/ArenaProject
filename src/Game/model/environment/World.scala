@@ -1,6 +1,6 @@
 package Game.model.environment
 
-import Game.model.game_objects.PhysicalObject
+import Game.model.game_objects.{Boundary, PhysicalObject}
 
 class World(val gravity: Double) {
 

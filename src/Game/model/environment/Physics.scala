@@ -3,7 +3,7 @@ package Game.model.environment
 import java.awt.geom.Line2D
 
 import Game.model.Game
-import _root_.Game.model.game_objects.{Ball, PhysicalObject}
+import _root_.Game.model.game_objects.{Ball, Boundary, PhysicalObject}
 
 
 
