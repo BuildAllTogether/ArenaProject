@@ -146,6 +146,9 @@ object SoccerGUI extends JFXApp {
 
 
     var scene1 = new Scene(windowWidth, windowHeight) {
+
+      fill = ForestGreen
+
       content = List(sceneGraphics)
 
       addEventHandler(ANY, new WASDInputs(game.playerA1))
