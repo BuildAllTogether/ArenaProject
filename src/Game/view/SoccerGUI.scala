@@ -1,7 +1,7 @@
 package Game.view
 
 import Game.controller.{ArrowInputs, IJKLInputs, TFGHInputs, WASDInputs}
-import javafx.scene.input.KeyEvent.ANY
+import javafx.scene.input.KeyEvent
 import Game.model.Game
 import _root_.Game.model.game_objects.{Boundary, Platform}
 import _root_.Game.model.environment.PhysicsVector
@@ -134,7 +134,7 @@ object SoccerGUI extends JFXApp {
 
 
       button.onAction = (event: ActionEvent) => {
-        println("Button clicked.")
+        println("Game Started.")
         println(textField.getText)
         GameWindow.setScene(scene1)
       }
@@ -151,10 +151,10 @@ object SoccerGUI extends JFXApp {
 
       content = List(sceneGraphics)
 
-      addEventHandler(ANY, new WASDInputs(game.playerA1))
-      addEventHandler(ANY, new ArrowInputs(player = game.playerA2))
-      addEventHandler(ANY, new IJKLInputs(player = game.playerB1))
-      addEventHandler(ANY, new TFGHInputs(player = game.playerB2))
+      addEventHandler(KeyEvent.ANY, new WASDInputs(game.playerA1))
+      addEventHandler(KeyEvent.ANY, new ArrowInputs(player = game.playerA2))
+      addEventHandler(KeyEvent.ANY, new IJKLInputs(player = game.playerB1))
+      addEventHandler(KeyEvent.ANY, new TFGHInputs(player = game.playerB2))
     }
 
     val update: Long => Unit = (time: Long) => {
