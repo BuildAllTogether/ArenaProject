@@ -33,12 +33,14 @@ class Player(playerLocation: PhysicsVector, playerVelocity: PhysicsVector, var p
 
   //Pressing D
   def dPressed(): Unit = {
+    println("D")
     this.dHeld = true
     this.state.dPressed()
   }
 
   //Pressing W or Space
   def wPressed(): Unit = {
+    println("W")
     this.wHeld = true
     this.state.wPressed()
   }
