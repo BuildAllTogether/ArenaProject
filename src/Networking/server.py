@@ -8,9 +8,6 @@ newplayer = {"name": "HEHE", "playerid": "4"}
 gameplayers = []
 
 
-@bottle.route('/Game.db')
-def Game_list:
-
 
 @bottle.get("/player")
 def getAll():
