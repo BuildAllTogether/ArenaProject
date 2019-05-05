@@ -7,6 +7,8 @@ import Game.model.environment.PhysicsVector
 class Player(playerLocation: PhysicsVector, playerVelocity: PhysicsVector, var playerOrientation: PhysicsVector)
   extends PhysicalObject(playerLocation, playerVelocity) {
 
+  var total_score: Int = 0
+
   val walkSpeed: Double = 5.0
   val airSpeed: Double = 4.0
 

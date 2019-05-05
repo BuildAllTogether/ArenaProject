@@ -7,7 +7,7 @@ import Game.model.Game
 object Database {
 
   val url = "jdbc:mysql://localhost/mysql?serverTimezone=UTC"
-  val username = "cow"
+  val username = "PythonServer"
   val password = "milky"
 
 
@@ -21,6 +21,15 @@ object Database {
   def setupTable(): Unit = {
     val statement = connection.createStatement()
     statement.execute("CREATE TABLE IF NOT EXISTS players (username TEXT, total_score INT)")
+  }
+
+  def playerExists(username: String): Boolean = {
+    val statement = connection.prepareStatement("SELECT * FROM players WHERE username=?")
+
+    statement.setString(1, username)
+    val result: ResultSet = statement.executeQuery()
+
+    result.next()
   }
 
   def createPlayer(username: String): Unit = {
