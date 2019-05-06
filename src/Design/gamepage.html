@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Soccer Shooters</title>
+</head>
+<body bgcolor="white"></body>
+
+<body onload="startGame()">
+
+    <script>
+        var myGamePiece1;
+        var myGamePiece2;
+        var myGamePiece3;
+        var myGamePiece4;
+
+        var myGoal1;
+        var myGoal2;
+
+
+    function startGame() {
+        player1();
+        player2();
+        player3();
+        player4();
+
+        goal1();
+        goal2();
+    }
+
+    function goal1() {
+        myGoal1 = new component(5, 95, "black", 0, 450);
+        myGameArea.start();
+    }
+    function goal2() {
+        myGoal2 = new component(5, 95, "black", 495, 450);
+        myGameArea.start();
+    }
+        function player1() {
+            myGamePiece1 = new component(30, 30, "red", 70, 450);
+            myGameArea.start();
+
+        }
+
+        function player2() {
+            myGamePiece2 = new component(30, 30, "red", 170, 450);
+            myGameArea.start();
+        }
+
+        function player3() {
+            myGamePiece3 = new component(30, 30, "blue", 400, 450);
+            myGameArea.start();
+        }
+
+        function player4() {
+            myGamePiece4 = new component(30, 30, "blue", 300, 450);
+            myGameArea.start();
+        }
+
+        var myGameArea = {
+            canvas : document.createElement("canvas"),
+            start : function() {
+                this.canvas.width = 500;
+                this.canvas.height = 450;
+                this.context = this.canvas.getContext("2d");
+                document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+                this.interval = setInterval(updateGameArea, 20);
+                window.addEventListener('keydown', function (e) {
+                    myGameArea.keys = (myGameArea.keys || []);
+                    myGameArea.keys[e.keyCode] = true;
+                });
+                window.addEventListener('keyup', function (e) {
+                    myGameArea.keys[e.keyCode] = false;
+                })
+            },
+            stop : function() {
+                clearInterval(this.interval);
+            },
+            clear : function() {
+                this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+            }
+
+
+        };
+
+        function component(width, height, color, x, y) {
+            this.width = width;
+            this.height = height;
+            this.x = x;
+            this.y = y;
+            this.speedX = 0;
+            this.speedY = 0;
+            this.gravity = 0.05;
+            this.gravitySpeed = 0;
+            this.update = function() {
+                gameLayout = myGameArea.context;
+                gameLayout.fillStyle = color;
+                gameLayout.fillRect(this.x, this.y, this.width, this.height);
+            }
+            this.newPosition = function() {
+                this.gravitySpeed += this.gravity;
+                this.x += this.speedX;
+                this.y += this.speedY + this.gravitySpeed;
+                this.hitBottom();
+            }
+            this.hitBottom = function() {
+                var rockbottom = myGameArea.canvas.height - this.height;
+                if (this.y > rockbottom) {
+                    this.y = rockbottom;
+                }
+            }
+        }
+
+        function updateGameArea() {
+            myGameArea.clear();
+            myGamePiece1.speedX = 0;
+            myGamePiece1.speedY = 0;
+
+
+            myGamePiece1.newPosition();
+            myGamePiece2.newPosition();
+            myGamePiece3.newPosition();
+            myGamePiece4.newPosition();
+
+            myGamePiece1.update();
+            myGamePiece2.update();
+            myGamePiece3.update();
+            myGamePiece4.update();
+
+            myGoal1.newPosition();
+            myGoal2.newPosition();
+
+            myGoal1.update();
+            myGoal2.update();
+
+// Controls for players in Unicode Characters
+
+            // Arrow Keys
+            myGamePiece4.speedX = 0;
+            myGamePiece4.speedY = 0;
+            if (myGameArea.keys && myGameArea.keys[37]) {myGamePiece4.speedX = -1; }
+            if (myGameArea.keys && myGameArea.keys[39]) {myGamePiece4.speedX = 1; }
+            if (myGameArea.keys && myGameArea.keys[38]) {myGamePiece4.speedY = -1; }
+            if (myGameArea.keys && myGameArea.keys[40]) {myGamePiece4.speedY = 1; }
+                myGamePiece4.newPosition();
+                myGamePiece4.update();
+
+            // AWSD
+            myGamePiece1.speedX = 0;
+            myGamePiece1.speedY = 0;
+            if (myGameArea.keys && myGameArea.keys[65]) {myGamePiece1.speedX = -1; }
+            if (myGameArea.keys && myGameArea.keys[68]) {myGamePiece1.speedX = 1; }
+            if (myGameArea.keys && myGameArea.keys[83]) {myGamePiece1.speedY = -1; }
+            if (myGameArea.keys && myGameArea.keys[87]) {myGamePiece1.speedY = 1; }
+                myGamePiece1.newPosition();
+                myGamePiece1.update();
+
+            //  TFGH
+            myGamePiece2.speedX = 0;
+            myGamePiece2.speedY = 0;
+            if (myGameArea.keys && myGameArea.keys[70]) {myGamePiece2.speedX = -1; }
+            if (myGameArea.keys && myGameArea.keys[72]) {myGamePiece2.speedX = 1; }
+            if (myGameArea.keys && myGameArea.keys[71]) {myGamePiece2.speedY = -1; }
+            if (myGameArea.keys && myGameArea.keys[84]) {myGamePiece2.speedY = 1; }
+                myGamePiece2.newPosition();
+                myGamePiece2.update();
+
+            //  KOLM
+            myGamePiece3.speedX = 0;
+            myGamePiece3.speedY = 0;
+            if (myGameArea.keys && myGameArea.keys[75]) {myGamePiece3.speedX = -1; }
+            if (myGameArea.keys && myGameArea.keys[77]) {myGamePiece3.speedX = 1; }
+            if (myGameArea.keys && myGameArea.keys[76]) {myGamePiece3.speedY = -1; }
+            if (myGameArea.keys && myGameArea.keys[79]) {myGamePiece3.speedY = 1; }
+                myGamePiece3.newPosition();
+                myGamePiece3.update();
+
+
+
+
+        }
+
+    </script>
+
+</body>
+</html>
