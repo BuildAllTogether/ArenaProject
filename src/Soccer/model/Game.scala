@@ -1,5 +1,8 @@
 package Soccer.model
 
+import Soccer.model.game_objects.Player
+import Soccer.model.game_objects.Boundary
+import Soccer.model.game_objects.Ball
 import play.api.libs.json.{JsValue, Json}
 import Soccer.model.game_objects._
 import Soccer.model.physics.{Physics, PhysicsVector, World}
@@ -48,7 +51,7 @@ class Game {
 
 
   def addPlayer(id: String): Unit = {
-    val player = new Player(new PhysicsVector(3, 3, 0), new PhysicsVector(0, 0))
+    val player = new Player(new PhysicsVector(3, 3, 0), new PhysicsVector(0, 0), new PhysicsVector(0,0))
     players += (id -> player)
     world.objects = player :: world.objects
   }

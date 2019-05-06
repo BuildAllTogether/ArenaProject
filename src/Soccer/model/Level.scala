@@ -2,7 +2,7 @@ package Soccer.model
 
 object Level {
 
-  def apply(number: Int): Level ={
+  def apply(): Level ={
     new Level{
       wallLocations = List(
         // Top Side
