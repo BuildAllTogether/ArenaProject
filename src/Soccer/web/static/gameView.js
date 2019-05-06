@@ -53,7 +53,7 @@ function drawGameBoard(gridSize) {
     canvas.setAttribute("width", gridWidth * tileSize);
     canvas.setAttribute("height", gridHeight * tileSize);
 
-    context.strokeStyle = '#bbbbbb';
+    context.strokeStyle = '#145e17';
     for (let j = 0; j <= gridWidth; j++) {
         context.beginPath();
         context.moveTo(j * tileSize, 0);

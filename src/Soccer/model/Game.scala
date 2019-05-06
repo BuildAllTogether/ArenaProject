@@ -77,6 +77,18 @@ class Game {
     walls = new Wall(x, y) :: walls
   }
 
+  def goalTiles(x: Int, y: Int, width: Int = 1, height: Int = 1): Unit = {
+    val ul = new PhysicsVector(x, y)
+    val ur = new PhysicsVector(x + width, y)
+    val lr = new PhysicsVector(x + width, y + height)
+    val ll = new PhysicsVector(x, y + height)
+
+    world.goals ::= new Boundary(ul, ur)
+    world.goals ::= new Boundary(ur, lr)
+    world.goals ::= new Boundary(lr, ll)
+    world.goals ::= new Boundary(ll, ul)
+  }
+
   def placeGoal(x: Int, y: Int): Unit = {
     blockTile(x, y)
     goals = new Goal (x, y) :: goals
@@ -96,8 +108,6 @@ var dt: Double = 0.0
   def gameState(): String = {
     val gameState: Map[String, JsValue] = Map(
       "gridSize" -> Json.toJson(Map("x" -> level.gridWidth, "y" -> level.gridHeight)),
-      "base" -> Json.toJson(Map("x" -> level.base.x, "y" -> level.base.y)),
-      "baseHealth" -> Json.toJson(baseHealth),
       "walls" -> Json.toJson(this.walls.map({ w => Json.toJson(Map("x" -> w.x, "y" -> w.y)) })),
       "goals" -> Json.toJson(this.goals.map({ g => Json.toJson(Map("x" -> g.x, "y" -> g.y)) })),
       "players" -> Json.toJson(this.players.map({ case (k, v) => Json.toJson(Map(
@@ -105,6 +115,7 @@ var dt: Double = 0.0
         "y" -> Json.toJson(v.location.y),
         "v_x" -> Json.toJson(v.velocity.x),
         "v_y" -> Json.toJson(v.velocity.y),
+        "team" -> Json.toJson(v.team),
         "id" -> Json.toJson(k)))})),
       "balls" -> Json.toJson(this.balls.map({ ball => Json.toJson(Map("x" -> ball.location.x, "y" -> ball.location.y))}))
     )
@@ -116,12 +127,12 @@ var dt: Double = 0.0
 
 
   def checkForGoals(): Unit = {
-    for (ball <- balls){
-
+    for (goal <- world.goals){
+      for (ball <- balls){
+        if (Physics.detectCollision(ball, Physics.computePotentialLocation(ball, dt), goal)){
+          new Game
+        }
+      }
     }
-  }
-
-  def checkForWin(): Unit = {
-
   }
 }
