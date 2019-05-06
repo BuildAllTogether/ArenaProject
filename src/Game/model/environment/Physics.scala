@@ -2,7 +2,7 @@ package Game.model.environment
 
 import java.awt.geom.Line2D
 
-import Game.model.Game
+import Soccer.model.Game
 import Game.model.game_objects.{Ball, Boundary, PhysicalObject}
 
 

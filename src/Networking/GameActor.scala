@@ -9,22 +9,14 @@ case object Save
 
 case object Setup
 
-class GameActor(usernames: String) extends Actor {
+class GameActor extends Actor {
 
   var fourcharacters: Int = 0
-  var the_game = new Game(usernames)
+  var the_game = new Game
 
   override def receive: Receive = {
     case Setup =>
-      for(user <- usernames) {
-        if (Database.playerExists(user.toString)) {
-          fourcharacters += 1
-        }
-        else {
-          Database.createPlayer(user.toString)
-            fourcharacters += 1
-        }
-      }
+
     case Update =>
       the_game.update(System.nanoTime())
    //   sender() ! GameState(the_game.toJSON())

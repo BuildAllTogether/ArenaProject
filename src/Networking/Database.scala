@@ -58,6 +58,6 @@ object Database {
     val result: ResultSet = statement.executeQuery()
 
     result.next()
-    game.total_score = result.getInt("total_score")
+ //   game.total_score = result.getInt("total_score")
   }
 }

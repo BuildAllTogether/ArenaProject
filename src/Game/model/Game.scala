@@ -4,7 +4,7 @@ import Game.model.Player._
 import Game.model.environment._
 import Game.model.game_objects._
 
-class Game(usernames: String) {
+class Game {
 
   val world = new World(10)
 
