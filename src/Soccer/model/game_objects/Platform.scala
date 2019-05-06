@@ -1,6 +1,6 @@
-package Game.model.game_objects
+package Soccer.model.game_objects
 
-import Game.model.environment.PhysicsVector
+import Soccer.model.physics.PhysicsVector
 
 object Platform {
 

@@ -1,7 +1,7 @@
-package Game.model.game_objects
+package Soccer.model.game_objects
 
-import Game.model.Player.Player
-import Game.model.environment.PhysicsVector
+import Soccer.model.game_objects.Player
+import Soccer.model.physics.PhysicsVector
 
 abstract class InanimateObject(location: PhysicsVector, velocity: PhysicsVector)
   extends PhysicalObject(location, velocity) {
