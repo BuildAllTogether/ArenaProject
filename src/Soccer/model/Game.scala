@@ -30,7 +30,7 @@ class Game {
   var lastUpdateTime: Long = System.nanoTime()
 
 
-  def loadSoccerField(): Unit = {
+  def loadSoccerField(level: Level): Unit = {
     world.boundaries = List()
 
     balls.foreach(po => po.destroy())
@@ -120,7 +120,9 @@ var dt: Double = 0.0
       "balls" -> Json.toJson(this.balls.map({ ball => Json.toJson(Map("x" -> ball.location.x, "y" -> ball.location.y))}))
     )
 
-    Json.stringify(Json.toJson(gameState))
+    val string = Json.stringify(Json.toJson(gameState))
+    println(string)
+    string
   }
 
 

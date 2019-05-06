@@ -12,7 +12,8 @@ class GameActor extends Actor {
   loadSoccerField()
 
   def loadSoccerField(): Unit ={
-    game.loadSoccerField()
+    val level: Level = new Level
+    game.loadSoccerField(level)
   }
 
   override def receive: Receive = {
